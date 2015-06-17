@@ -43,7 +43,7 @@ Each scenario has it's own rule script to send out notifications. These rule scr
 
 <strong>Setting Up a Drip</strong>
 
-Under advanced in the nebrios web app, there is a drips tab. `/core/drip/`
+Under advanced in the nebrios web app, there is a drips tab, endpoint `/core/drip/`.
 Drips utilize cron job syntax for when they are run (www.cronmaker.com):
   ```
    * * * * *  command to execute
