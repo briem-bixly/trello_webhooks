@@ -60,8 +60,7 @@ Drips utilize cron job syntax for when they are run (www.cronmaker.com):
   `key/value pairs` should reflect what key/value pairs should be created
   
   <strong>Example</strong> In order to create a drip to run `trello_pastdue_notify_webhook` every day at 8am, your drip should look like:
-    
-      ```
+      
       schedule: 0 8 * * *
       key/value pairs: trello_pastdue_notify_webhook := True
-      ```
+      
