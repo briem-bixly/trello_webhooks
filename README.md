@@ -29,6 +29,8 @@ Setup is now complete. At this point, data will automatically be received from t
 There are a few different ticket scenarios that are currently covered by this app: notifications when a ticket is completed, notifications when a ticket has become past due, and notifications for when a card has been archived.
 
 Each scenario has it's own rule script to send out notifications. These rule scripts can be triggered manually for testing, or can be set up to run on a drip schedule.
+
+<strong>Manually Triggering Scripts</strong>
   ```
   fetch_trello_completed_cards := True
   ```
@@ -38,3 +40,28 @@ Each scenario has it's own rule script to send out notifications. These rule scr
   trello_pastdue_notify_webhook := True
   ```
   When the above line is sent via debug mode, `trello_pastdue_notify_webhook` will be triggered, causing a script to find all cards that were due in the past 24 hours and send an email listing all found cards. `TARGET_EMAIL` should be edited accordingly.
+
+<strong>Setting Up a Drip</strong>
+
+Under advanced in the nebrios web app, there is a drips tab. (/core/drip/)
+Drips utilize cron job syntax for when they are run (www.cronmaker.com):
+  ```
+   * * * * *  command to execute
+   │ │ │ │ │
+   │ │ │ │ │
+   │ │ │ │ └───── day of week (0 - 6) (0 to 6 are Sunday to Saturday, or use names; 7 is Sunday, the same as 0)
+   │ │ │ └────────── month (1 - 12)
+   │ │ └─────────────── day of month (1 - 31)
+   │ └──────────────────── hour (0 - 23)
+   └───────────────────────── min (0 - 59)
+  ```
+  
+  `schedule` should reflect the cron schedule in the above syntax
+  `key/value pairs` should reflect what key/value pairs should be created
+  
+  <strong>Example</strong> In order to create a drip to run `trello_pastdue_notify_webhook` every day at 8am, your drip should look like:
+    
+      ```
+      schedule: 0 8 * * *
+      key/value pairs: trello_pastdue_notify_webhook := True
+      ```
