@@ -90,3 +90,8 @@ Drips utilize cron job syntax for when they are run (www.cronmaker.com):
       schedule: 0 8 * * *
       key/value pairs: trello_pastdue_notify_webhook := True
       
+If for whatever reason, you would like to delete all webhooks for a user, submit the following KVP in debug mode.
+  ```
+  trello_delete_webhooks_for_user := True
+  ```
+This will delete all webhooks associated with your user and you will then be able to re create webhooks.
