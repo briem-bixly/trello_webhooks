@@ -24,6 +24,32 @@ Once that has run, you'll want to trigger trello_watch_boards_for_user to set up
   trello_watch_boards_for_user := True
   ```
 Setup is now complete. At this point, data will automatically be received from trello based on events that happen on the user's boards and will update appropriate shared KVPs accordingly. This will also trigger creation of shared.TRELLO_BOARD_LIST_TREE, which will contain info detailing boards and lists belonging to all boards.
+Example shared.TRELLO_BOARD_LIST_TREE entry:
+  ```
+  [{
+    "board_name": "Backup Board",
+    "board_id": "5580b79a42b38b3b91fe6afe",
+    "lists": [{
+      "id": "558350d53df0610a41a9649c",
+      "name": "Backup List"
+    }, {
+      "id": "55834f64c1c1c29271087845",
+      "name": "Backup List"
+    }, {
+      "id": "5580b79b080d932669765c33",
+      "name": "Backup List"
+    }, {
+      "id": "5580b79a42b38b3b91fe6aff",
+      "name": "To Do"
+    }, {
+      "id": "5580b79a42b38b3b91fe6b00",
+      "name": "Doing"
+    }, {
+      "id": "5580b79a42b38b3b91fe6b01",
+      "name": "Done"
+    }]
+  }]
+  ```
 
 <h4>Usage</h4>
 There are a few different ticket scenarios that are currently covered by this app: notifications when a ticket is completed, notifications when a ticket has become past due, and notifications for when a card has been archived.
