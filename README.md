@@ -23,7 +23,7 @@ Once that has run, you'll want to trigger trello_watch_boards_for_user to set up
   ```
   trello_watch_boards_for_user := True
   ```
-Setup is now complete. At this point, data will automatically be received from trello based on events that happen on the user's boards and will update appropriate shared KVPs accordingly.
+Setup is now complete. At this point, data will automatically be received from trello based on events that happen on the user's boards and will update appropriate shared KVPs accordingly. This will also trigger creation of shared.TRELLO_BOARD_LIST_TREE, which will contain info detailing boards and lists belonging to all boards.
 
 <h4>Usage</h4>
 There are a few different ticket scenarios that are currently covered by this app: notifications when a ticket is completed, notifications when a ticket has become past due, and notifications for when a card has been archived.
