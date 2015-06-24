@@ -1,6 +1,6 @@
 class trello_webhook_setup(NebriOS):
     listens_to = ['trello_webhook_setup']
-    required = ['trello_api_key', 'trello_api_secret', 'instance_name']
+    required = ['trello_api_key', 'trello_api_secret', 'instance_name', 'past_due_notify_address']
     
     # Note: This script is used to set up the trello webhook system.
     # If shared.TRELLO_API_KEY and shared.TRELLO_API_SECRET are not created,
@@ -8,6 +8,7 @@ class trello_webhook_setup(NebriOS):
     # trello_api_key := <api_key>
     # trello_api_secret := <api_secret>
     # instance_name := <instance_name>
+    # past_due_notify_address := <past_due_notify_address>
 
     def check(self):
         return self.trello_webhook_setup == True
@@ -32,6 +33,7 @@ class trello_webhook_setup(NebriOS):
                 shared.TRELLO_API_SECRET = self.trello_api_secret
             else:
                 raise Exception('Trello API secret does not exist. Please supply one.')
+        shared.PAST_DUE_NOTIFY_ADDRESS = self.past_due_notify_address
         # next let's see if the current user has a token already
         try:
             p = Process.objects.get(user=self.last_actor, kind="oauth_token")
