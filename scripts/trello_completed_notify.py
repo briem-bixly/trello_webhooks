@@ -4,9 +4,6 @@ from dateutil import parser as dateparser #pip install python-dateutil
 from trello import TrelloClient, Card
 
 
-LIST_NAME = "Done"
-TARGET_EMAIL = "briem@bixly.com"
-
 class trello_completed_notify(NebriOS):
     listens_to = ['fetch_trello_completed_cards']
 
@@ -49,60 +46,9 @@ class trello_completed_notify(NebriOS):
                 # no cards in this board satisfying the notification requirements
                 print "No cards in this board satisfying notification requirements"
         if email_body != "":
-            send_email (TARGET_EMAIL,email_body)
-            
+            send_email (shared.COMPLETED_NOTIFY_ADDRESS, email_body)
 
-    def old_action(self):
-        APP_KEY = self.TRELLO_KEY
-        APP_SECRET = '33b9969aa45b58aa24f340fc0527587c5ef0248a9f24d1048f107492f7d01db8'
-        TOKEN = self.TRELLO_TOKEN
-        
-        client = TrelloClient(api_key=APP_KEY, api_secret=APP_SECRET, token=TOKEN)
-        
-        self.fetch_trello_completed_cards = "Ran"
-        
-        boards = client.list_boards()
-        dt_now = datetime.datetime.now(pytz.utc)
-        
-        email_body = ""
-        
-        for b in boards:
-            print "BOARD:", b.name
-            lists = b.all_lists()
-            done_list = False
-            for lst in lists:
-                if lst.name == LIST_NAME:
-                    done_list = lst
-            if not done_list:
-                print "No '%s' list. Will not process this board." % LIST_NAME
-            else:
-                cards = get_open_cards(b)
-                my_cards = []
-                for card in cards:
-                    if card.actual_list_id == done_list.id:
-                        json = get_card_list_changes(card)
-                        if len(json) > 0:
-                            change_dt = json[0].get('date', '')
-                            if change_dt != '':
-                                dt = dateparser.parse(change_dt)
-                                diff = dt_now - dt
-                                if 0 <= diff.total_seconds() and diff.total_seconds() <= 60*60*24:
-                                    card.difftime = diff
-                                    my_cards.append(card)
-                if len(my_cards) > 0:
-                    to_append = "<h2>Board: %s</h2>\n" % b.name
-                    to_append = to_append + "<h3>Recently finished tickets</h3>\n"
-                    to_append = to_append + "<ul>"
-                    for card in my_cards:
-                        to_append = "%s<li><a href='%s'>%s</a></li>" % (to_append, card.url, card.name)
-                    to_append = to_append + "</ul>"
-                    email_body = email_body + to_append
-                else:
-                    # no cards in this board satisfying the notification requirements
-                    print "No cards in this board satisfying notification requirements"
-        if email_body != "":
-            send_email (TARGET_EMAIL,email_body)
-        
+    
 def force_convert_to_utc(d):
     return pytz.utc.localize(datetime.datetime(d.year, d.month, d.day, d.hour, d.minute, d.second))
 
