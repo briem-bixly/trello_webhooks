@@ -5,54 +5,7 @@ import requests
 class trello_archive_check_webhook(NebriOS):
     listens_to = ['shared.trello_webhook_data']
 
-    # Test keys and ids
-    #RECIPIENT_BOARD_ID = '5543344ce180c4f4a007b7f2'
-    #RECIPIENT_BOARD_LIST_ID = '554368519fbb1a2a23188bc3'
-
-    RECIPIENT_BOARD_ID = '555f18ec2f7124bb20eb43fb'
-    RECIPIENT_BOARD_LIST_ID = '555f18fbf000bfa520b9bb3f'
-
     def check(self):
-        # Sample webhook data of an archive action
-        """
-        {
-          "action": {
-            "data": {
-              "list": {
-                "name": "Doing",
-                "id": "550f99bb549b7af0addfc6d0"
-              },
-              "old": {
-                "closed": false
-              },
-              "board": {
-                "shortLink": "pMTeOLL5",
-                "id": "550f99aa150f282430cae0cb",
-                "name": "To Nebrize"
-              },
-              "card": {
-                "idShort": 74,
-                "shortLink": "5nCAJUZ3",
-                "name": "Test Card (for Erick and to be removed later)",
-                "closed": true,
-                "id": "555ef54ccd3563e485200b70"
-              }
-            },
-            "idMemberCreator": "551f21e7d06cafd96401fc67",
-            "memberCreator": {
-              "username": "erickdavid",
-              "fullName": "Erick David",
-              "id": "551f21e7d06cafd96401fc67",
-              "avatarHash": "95b7b8c49d41d5cb65f5587b24ba20b9",
-              "initials": "ED"
-            },
-            "date": "05/22/2015 09:43:20 AM",
-            "type": "updateCard",
-            "id": "555efa3815d379337643e234"
-          },
-          ...
-        }
-        """
         
         if (type(shared.trello_webhook_data) != list or 
             shared.trello_webhook_data == []):
@@ -78,8 +31,8 @@ class trello_archive_check_webhook(NebriOS):
 
         self.moved_cards = []
         client = TrelloClient(
-            api_key='11162496ef983e6cc27a13042500464a',
-            token='b9c36b3d582223559fa47006603471c260b2f7fc148c30bf545d0f031120bd56'
+            api_key=shared.TRELLO_API_KEY,
+            token=self.TRELLO_TOKEN
         )
         card_id = self.webhook_data['action']['data']['card']['id']
         card = client.get_card(card_id)
@@ -119,8 +72,8 @@ class trello_archive_check_webhook(NebriOS):
             # }
             # self.moved_cards.append(card_attr)
             
-            RECIPIENT_BOARD_ID = '556e36092adf5b1fd423bf3d'
-            RECIPIENT_BOARD_LIST_ID = '556e3615d5c466f12e525b24'
+            RECIPIENT_BOARD_ID = self.RECIPIENT_BOARD_ID
+            RECIPIENT_BOARD_LIST_ID = self.RECIPIENT_BOARD_LIST_ID
 
             card_copy = copy.copy(card)
             board = client.get_board(RECIPIENT_BOARD_ID)
