@@ -38,4 +38,4 @@ class trello_pastdue_notify_webhook(NebriOS):
                 print "No cards in this board satisfying notification requirements"
                 
         if email_body != "":
-            send_email (self.TARGET_EMAIL,email_body)
+            send_email (self.PAST_DUE_NOTIFY_ADDRESS, email_body)
