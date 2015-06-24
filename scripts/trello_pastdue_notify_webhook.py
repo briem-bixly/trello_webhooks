@@ -3,7 +3,6 @@ import pytz
 
 class trello_pastdue_notify_webhook(NebriOS):
     listens_to = ['trello_pastdue_notify_webhook']
-    TARGET_EMAIL = "briem@bixly.com"
 
     def check(self):
         return self.trello_pastdue_notify_webhook  == True
