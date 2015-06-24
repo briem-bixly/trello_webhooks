@@ -16,7 +16,6 @@ class trello_delete_webhooks_for_user(NebriOS):
     listens_to = ['trello_delete_webhooks_for_user']
     
     # Our users should not know this
-#    TRELLO_API_SECRET = '1752bd46669f299633010d0eece6c7ceb2068abba72162c1f6f4458247554bd6'
     
     def check(self):   
         if self.trello_token is None:
